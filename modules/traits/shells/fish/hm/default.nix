@@ -20,6 +20,20 @@ in
       "$HOME/.local/bin"
     ];
 
+    home.packages = [
+      (pkgs.writeShellApplication {
+        name = "ns";
+        runtimeInputs = [
+          pkgs.fzf
+          pkgs.nix-search-tv
+        ];
+        excludeShellChecks = [
+          "SC2016"
+        ];
+        text = builtins.readFile "${pkgs.nix-search-tv.src}/nixpkgs.sh";
+      })
+    ];
+
     programs = {
       fish = {
         enable = true;
